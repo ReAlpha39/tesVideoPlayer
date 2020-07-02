@@ -16,6 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="加载失败，轻触屏幕重新加载" />
+        android:text="@string/failed_to_load_touch_the_screen_to_reload" />
 
 </LinearLayout>

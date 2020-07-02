@@ -31,7 +31,7 @@
         android:layout_centerVertical="true"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="左边文字"
+        android:text="@string/left_text"
         android:textColor="#ffffff"
         android:textSize="17sp"
         android:visibility="gone" />
@@ -44,7 +44,7 @@
         android:layout_centerInParent="true"
         android:maxWidth="224dp"
         android:singleLine="true"
-        android:text="界面标题"
+        android:text="@string/interface_title"
         android:textColor="#ffffff"
         android:textSize="18sp" />
 
@@ -56,7 +56,7 @@
         android:layout_centerVertical="true"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="右边文字"
+        android:text="@string/right_text"
         android:textColor="#ffffff"
         android:textSize="17sp"
         android:visibility="gone" />

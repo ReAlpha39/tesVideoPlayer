@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp" 
-        android:text="名称"
+        android:text="@string/name"
         android:lines="2"
         android:textSize="14sp"/>
    <TextView

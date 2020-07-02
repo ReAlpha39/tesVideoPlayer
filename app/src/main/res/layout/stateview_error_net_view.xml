@@ -16,6 +16,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="网络不给力，轻触屏幕重新加载" />
+        android:text="@string/no_network_available_touch_the_screen_to_reload" />
 
 </LinearLayout>

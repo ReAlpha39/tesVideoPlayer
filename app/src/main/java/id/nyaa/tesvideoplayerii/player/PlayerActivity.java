@@ -54,7 +54,7 @@ public class PlayerActivity extends AppCompatActivity{
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         position = getIntent().getIntExtra("position", -1);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
 
 
         playerVideo();
@@ -72,6 +72,7 @@ public class PlayerActivity extends AppCompatActivity{
             LocalVideoBean video = (LocalVideoBean) getIntent()
                     .getParcelableExtra("video");
             mVideoRes = new Resources();
+            assert video != null;
             mVideoRes.setTitle(video.title);
             mVideoRes.setDescription("");
             mVideoRes.setLink(video.path);

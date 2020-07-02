@@ -60,10 +60,9 @@ public class MainActivity<PullToRefreshListView> extends AppCompatActivity imple
     }
 
     private void initTitle() {
-        // 1.设置左边的图片按钮显示，以及事件 2.设置中间TextView显示的文字 3.设置右边的图片按钮显示，并设置事件
         new TitleBuilder(this).setLeftImageRes(false, 0)
                 .setLeftTextOrImageListener(true, null)
-                .setMiddleTitleText("本地视频");
+                .setMiddleTitleText("Video Player Nyaa");
     }
 
     /**
@@ -175,20 +174,9 @@ public class MainActivity<PullToRefreshListView> extends AppCompatActivity imple
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                    //同意给与权限  可以再此处调用拍照
-                    Log.i("用户同意权限", "user granted the permission!");
                     getDatas();
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // f用户不同意 可以给一些友好的提示
-                    Log.i("用户不同意权限", "user denied the permission!");
                 }
-                return;
             }
-
             // other 'case' lines to check for other
             // permissions this app might request
         }
@@ -215,9 +203,7 @@ public class MainActivity<PullToRefreshListView> extends AppCompatActivity imple
         mListView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPullToRefreshListview.setPullLabel("刷新完成");
                 mPullToRefreshListview.onRefreshComplete();
-                mPullToRefreshListview.setPullLabel("下拉刷新");
             }
         }, 1000);
     }

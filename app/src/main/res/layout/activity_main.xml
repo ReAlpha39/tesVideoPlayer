@@ -6,13 +6,12 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/titlebar"
+        android:id="@+id/title_bar"
         layout="@layout/title_bar" />
 
-    <id.nyaa.tesvideoplayerii.view.stateview.StateView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <id.nyaa.tesvideoplayerii.view.stateview.StateView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/mStateView"
-        android:layout_below="@+id/titlebar"
+        android:layout_below="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:state_current="content"
@@ -20,8 +19,7 @@
         app:state_error="@layout/stateview_error_net_view"
         app:state_loading="@layout/stateview_loading_view">
 
-        <com.handmark.pulltorefresh.library.PullToRefreshListView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        <com.handmark.pulltorefresh.library.PullToRefreshListView xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/PullToRefreshListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements
     private void initTitle() {
         new TitleBuilder(this).setLeftImageRes(false, 0)
                 .setLeftTextOrImageListener(true, null)
-                .setMiddleTitleText("Video Player Nyaa");
+                .setMiddleTitleText(getString(R.string.title));
     }
 
     /**

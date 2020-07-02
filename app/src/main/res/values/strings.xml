@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">VideoPlayer</string>
+    <string name="loading">Loading...</string>
+    <string name="title">Video Player Nyaa</string>
 </resources>

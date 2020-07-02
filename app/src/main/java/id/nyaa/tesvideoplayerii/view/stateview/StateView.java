@@ -36,7 +36,7 @@ public class StateView extends FrameLayout {
     @ViewState
     public int mCurrentState = STATE_CONTENT;
 
-    //各种状态下的View
+    // View in various states
     private View mContentView, mLoadingView, mErrorView, mEmptyView;
 
     private LayoutInflater inflater;
@@ -62,7 +62,7 @@ public class StateView extends FrameLayout {
         inflater = LayoutInflater.from(getContext());
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.StateView);
 
-        //初始化各种状态下的布局并添加到stateView中
+        // Initialize the layout in various states and add it to stateView
 
         int emptyViewResId = a.getResourceId(R.styleable.StateView_state_empty, -1);
         if (emptyViewResId > -1) {
@@ -84,7 +84,7 @@ public class StateView extends FrameLayout {
             mLoadingView = inflater.inflate(loadingViewResId, this, false);
             addView(mLoadingView, mLoadingView.getLayoutParams());
         }
-        //获取指定的状态，如未指定则默认content
+        // Get the specified status, default content if not specified
         int givenState = a.getInt(R.styleable.StateView_state_current, STATE_CONTENT);
         switch (givenState) {
             case STATE_CONTENT:
@@ -107,7 +107,7 @@ public class StateView extends FrameLayout {
     }
 
     /**
-     * 设置各个状态下View的显示与隐藏
+     * Set the display and hide of the View in each state
      */
     private void setStateView() {
         switch (mCurrentState) {
@@ -142,27 +142,6 @@ public class StateView extends FrameLayout {
     }
 
     /**
-     * 获取指定状态下的View
-     *
-     * @param state
-     * @return
-     */
-    public View getStateView(@ViewState int state) {
-        switch (state) {
-            case STATE_CONTENT:
-                return mContentView;
-            case STATE_EMPTY:
-                return mEmptyView;
-            case STATE_ERROR:
-                return mErrorView;
-            case STATE_LOADING:
-                return mLoadingView;
-            default:
-                return null;
-        }
-    }
-
-    /**
      * @param view
      * @param viewName
      */
@@ -178,14 +157,8 @@ public class StateView extends FrameLayout {
         view.setVisibility(VISIBLE);
     }
 
-
-    @ViewState
-    public int getCurrentState() {
-        return mCurrentState;
-    }
-
     /**
-     * 设置当前状态
+     * Set current status
      *
      * @param state
      */
@@ -196,80 +169,6 @@ public class StateView extends FrameLayout {
         }
     }
 
-    /**
-     * 通过代码设置指定状态的View
-     *
-     * @param stateView     view in state
-     * @param state         viewState
-     * @param switchToState 是否切换到指定的state
-     */
-    public void setViewForState(View stateView, @ViewState int state, boolean switchToState) {
-        switch (state) {
-            case STATE_CONTENT:
-                if (mContentView != null)
-                    removeView(mContentView);
-                mContentView = stateView;
-                addView(mContentView);
-                break;
-            case STATE_LOADING:
-                if (mLoadingView != null)
-                    removeView(mLoadingView);
-                mLoadingView = stateView;
-                addView(mLoadingView);
-                break;
-            case STATE_EMPTY:
-                if (mEmptyView != null)
-                    removeView(mEmptyView);
-                mEmptyView = stateView;
-                addView(mEmptyView);
-                break;
-            case STATE_ERROR:
-                if (mErrorView != null)
-                    removeView(mErrorView);
-                mErrorView = stateView;
-                addView(mErrorView);
-                break;
-        }
-        //切换到指定状态
-        if (switchToState)
-            setCurrentState(state);
-    }
-
-    /**
-     * 方法重载，默认不切换至指定状态
-     *
-     * @param stateView
-     * @param state
-     */
-    public void setViewForState(View stateView, @ViewState int state) {
-        setViewForState(stateView, state, false);
-    }
-
-    /**
-     * 动态设置指定状态的布局
-     *
-     * @param layoutRes
-     * @param state
-     * @param switchToState
-     */
-    public void setViewForState(int layoutRes, @ViewState int state, boolean switchToState) {
-        if (inflater == null)
-            inflater = LayoutInflater.from(getContext());
-        View stateView = inflater.inflate(layoutRes, this, false);
-        setViewForState(stateView, state, switchToState);
-    }
-
-    /**
-     * 方法重载，默认不切换至指定状态
-     *
-     * @param layoutRes
-     * @param state
-     */
-    public void setViewForState(int layoutRes, @ViewState int state) {
-        setViewForState(layoutRes, state, false);
-    }
-
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -278,7 +177,7 @@ public class StateView extends FrameLayout {
     }
 
     /**
-     * 复写所有的addView()方法
+     * Copy all addView() methods
      */
     @Override
     public void addView(View child) {
@@ -323,7 +222,7 @@ public class StateView extends FrameLayout {
     }
 
     /**
-     * 判断所添加的View是否是有效的contentView
+     * Determine whether the added View is a valid contentView
      *
      * @param view
      * @return

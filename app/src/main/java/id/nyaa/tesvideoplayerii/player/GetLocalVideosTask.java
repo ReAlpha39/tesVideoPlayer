@@ -4,7 +4,10 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.MediaStore;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ public class GetLocalVideosTask extends AsyncTask<Object,Integer, List<LocalVide
 
     private OnSuccessListener onSuccessListener;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected List<LocalVideoBean> doInBackground(Object... params) {
         ContentResolver contentResolver = (ContentResolver) params[0];
@@ -27,8 +31,11 @@ public class GetLocalVideosTask extends AsyncTask<Object,Integer, List<LocalVide
         };
         Cursor cursor = contentResolver.query(uri,projections,null,null,null);
         List<LocalVideoBean> videos = new ArrayList<LocalVideoBean>();
+        assert cursor != null;
         while (cursor.moveToNext()){
-            LocalVideoBean v = new LocalVideoBean(cursor.getString(0),cursor.getString(1),cursor.getLong(2),cursor.getString(3));
+            LocalVideoBean v = new LocalVideoBean(cursor.getString(0),
+                    cursor.getString(1),cursor.getLong(2),
+                    cursor.getString(3));
             videos.add(v);
         }
         cursor.close();

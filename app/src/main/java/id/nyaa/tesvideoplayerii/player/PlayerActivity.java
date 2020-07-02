@@ -1,40 +1,16 @@
 package id.nyaa.tesvideoplayerii.player;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import id.nyaa.tesvideoplayerii.R;
 import id.nyaa.tesvideoplayerii.bean.LocalVideoBean;
-import id.nyaa.tesvideoplayerii.ui.title.TitleBuilder;
 import id.nyaa.tesvideoplayerii.bean.Resources;
-
-import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.MediaPlayer.OnBufferingUpdateListener;
-import io.vov.vitamio.MediaPlayer.OnCompletionListener;
-import io.vov.vitamio.MediaPlayer.OnErrorListener;
-import io.vov.vitamio.MediaPlayer.OnInfoListener;
-import io.vov.vitamio.MediaPlayer.OnPreparedListener;
-import io.vov.vitamio.MediaPlayer.OnSeekCompleteListener;
-import io.vov.vitamio.Vitamio;
 
 public class PlayerActivity extends AppCompatActivity{
     VideoView videoView;
@@ -67,7 +43,7 @@ public class PlayerActivity extends AppCompatActivity{
         if (videoType == 0) {
             mVideoRes = getIntent().getParcelableExtra("video");
         } else if(videoType == 1){
-            //本地视频
+            //Local video
             isPlayLocalVideo = true;
             LocalVideoBean video = (LocalVideoBean) getIntent()
                     .getParcelableExtra("video");

@@ -2,9 +2,6 @@ package id.nyaa.tesvideoplayerii.player;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +26,8 @@ public class LocalVideoListAdapter extends BaseAdapter {
         super();
         this.mVideoList = videoList;
         this.mContext = context;
-        mVideoImageLoader = new LocalVideoImageLoader(context);// 初始化缩略图载入方法
+        // Initialize thumbnail loading method
+        mVideoImageLoader = new LocalVideoImageLoader(context);
     }
 
     @Override
@@ -58,7 +56,7 @@ public class LocalVideoListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.setData(mVideoList.get(position));
-        viewHolder.image.setTag(mVideoImageLoader.hashKeyForDisk(mVideoList.get(position).path));//绑定imageview
+        viewHolder.image.setTag(mVideoImageLoader.hashKeyForDisk(mVideoList.get(position).path));
         mVideoImageLoader.showThumbByAsynctack(mVideoList.get(position).path, viewHolder.image);
         return convertView;
     }
@@ -70,36 +68,15 @@ public class LocalVideoListAdapter extends BaseAdapter {
         Bitmap bitmap = Bitmap.createBitmap( 10,10, Bitmap.Config.ARGB_4444 );
 
         public ViewHolder(View view){
-            image = (ImageView) view.findViewById(R.id.image);
-            title = (TextView) view.findViewById(R.id.title);
-            duration = (TextView) view.findViewById(R.id.duration);
+            image = view.findViewById(R.id.image);
+            title = view.findViewById(R.id.title);
+            duration = view.findViewById(R.id.duration);
         }
 
         public void setData(LocalVideoBean video){
             title.setText(video.title);
             duration.setText(StringUtils.generateTime(Long.parseLong(video.duration)));
-//			sizeText.setText("大小：" + StringUtils.generateFileSize(video.size));
             image.setImageBitmap(bitmap);
-        }
-
-        /**
-         * 获取视频文件截图
-         *
-         * @param path
-         *            视频文件的路径
-         * @return Bitmap 返回获取的Bitmap
-         */
-        public static Bitmap getVideoThumb(String path) {
-            MediaMetadataRetriever media = new MediaMetadataRetriever();
-            media.setDataSource(path);
-            return media.getFrameAtTime();
-        }
-
-        public static Bitmap getVideoThumb1(String path) {
-            Bitmap  bitmap = ThumbnailUtils.createVideoThumbnail(path,
-                    MediaStore.Video.Thumbnails.MICRO_KIND);//MINI_KIND: 512 x 384，MICRO_KIND: 96 x 96,
-//			bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-            return bitmap;
         }
     }
 }

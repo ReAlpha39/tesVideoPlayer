@@ -3,13 +3,13 @@ package id.nyaa.tesvideoplayerii;
 import android.app.Application;
 
 /**
- * 全局Application
+ * Global Application
  */
 public class MyApplication extends Application {
     private static MyApplication instance;
 
     /**
-     * 获取Application
+     * Get Application
      *
      * @return BaseApplication
      */
@@ -21,7 +21,7 @@ public class MyApplication extends Application {
     }
 
     /**
-     * 获取上下文
+     * Get Context
      *
      * @return getInstance()
      */

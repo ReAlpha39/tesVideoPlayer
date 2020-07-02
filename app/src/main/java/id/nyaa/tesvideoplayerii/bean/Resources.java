@@ -12,14 +12,13 @@ public class Resources implements Parcelable {
     public Resources() {
     }
 
-    protected Resources(Parcel in) {
+    private Resources(Parcel in) {
         type = in.readInt();
         title = in.readString();
         link = in.readString();
         duration = in.readString();
         description = in.readString();
     }
-
 
     public void setTitle(String title) {
         this.title = title;
@@ -30,34 +29,12 @@ public class Resources implements Parcelable {
     }
 
 
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-
     public void setDescription(String description) {
         this.description = description;
     }
 
-
-    public String getTitle() {
-        return title;
-    }
-
     public String getLink() {
         return link;
-    }
-
-
-    public String getDuration() {
-        return duration;
-    }
-    public String getDescription() {
-        return description;
-    }
-
-    public static Creator<Resources> getCreator() {
-        return CREATOR;
     }
 
     public static final Creator<Resources> CREATOR = new Creator<Resources>() {
@@ -71,14 +48,6 @@ public class Resources implements Parcelable {
             return new Resources[size];
         }
     };
-
-    public String getVideoTitle() {
-        return title;
-    }
-
-    public String getVideoDes() {
-        return description;
-    }
 
     @Override
     public int describeContents() {

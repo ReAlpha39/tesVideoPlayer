@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.collection.LruCache;
 
 import java.io.BufferedInputStream;
@@ -32,35 +33,36 @@ import id.nyaa.tesvideoplayerii.R;
 public class LocalVideoImageLoader {
     private Context mContext;
     private String key;
-    //创建cache
+    //Create cache
     private LruCache<String, Bitmap> lruCache;
 
     /**
-     * 图片硬盘缓存类
+     * Picture cache
      */
     private DiskLruCache mDiskLruCache;
 
     public LocalVideoImageLoader(Context context){
         this.mContext = context;
-        //初始化LruCache内存缓存
-        int maxMemory = (int) Runtime.getRuntime().maxMemory();//获取最大的运行内存
-        int maxSize = maxMemory / 8; //拿到缓存的内存大小 35
+        //Initialize LruCache memory cache
+        int maxMemory = (int) Runtime.getRuntime().maxMemory();//Get the maximum running memory
+        int maxSize = maxMemory / 8; //Get the cached memory size 35
         lruCache = new LruCache<String, Bitmap>(maxSize){
             @SuppressLint("NewApi")
             @Override
-            protected int sizeOf(String key, Bitmap value) {
-                //这个方法会在每次存入缓存的时候调用
-                return value.getByteCount(); //需要api >=12 ， 总字节数
+            protected int sizeOf(@NonNull String key, @NonNull Bitmap value) {
+                //This method will be called every time it is stored in the cache
+                return value.getByteCount();
             }
         };
-        //初始化DiskCache本地缓存
+
+        //Initialize DiskCache local cache
         try {
-            // 获取图片缓存路径
+            // Get image cache path
             File cacheDir = getDiskCacheDir(mContext, "VideoThumb");
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs();
             }
-            // 创建DiskLruCache实例，初始化缓存数据
+            // Create DiskLruCache instance, initialize cache data
             mDiskLruCache = DiskLruCache
                     .open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
         } catch (IOException e) {
@@ -71,7 +73,7 @@ public class LocalVideoImageLoader {
     public void showThumbByAsynctack(String path, ImageView imgview){
         key = hashKeyForDisk(path);
         if(getVideoThumbToCache(key) == null){
-            //内存加载失败，从本地加载或生成视频截图
+            //Memory load failed, load or generate video screenshot from local
             new MyBobAsynctack(imgview, path).execute(path);
         }else{
             imgview.setImageBitmap(getVideoThumbToCache(key));
@@ -82,7 +84,7 @@ public class LocalVideoImageLoader {
     public void addVideoThumbToCache(String key,Bitmap bitmap){
 
         if(getVideoThumbToCache(key) == null){
-            //当前地址没有缓存时，就添加
+            //When the current address is not cached, add
             lruCache.put(key, bitmap);
         }
     }
@@ -104,27 +106,20 @@ public class LocalVideoImageLoader {
 
         @Override
         protected Bitmap doInBackground(String... params) {
-            //这里的创建缩略图方法是调用VideoUtil类的方法，也是通过 android中提供的 ThumbnailUtils.createVideoThumbnail(vidioPath, kind);
-//            Bitmap bitmap = VideoUtil.createVideoThumbnail(params[0], 70, 50, MediaStore.Video.Thumbnails.MICRO_KIND);
-//            Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(params[0],  Thumbnails.MINI_KIND);
-            //加入缓存中
-//            if(bitmap != null){
-//            	 if(getVideoThumbToCache(params[0]) == null){
-//                     addVideoThumbToCache(path, bitmap);
-//                 }
-//            }
 
             FileDescriptor fileDescriptor = null;
             FileInputStream fileInputStream = null;
             DiskLruCache.Snapshot snapShot = null;
             try {
-                // 生成图片URL对应的key,利用key而不是原来的path是因为防止中文等特殊符号，导致存不进缓存
+                // The key corresponding to the image URL is generated.
                 final String key = hashKeyForDisk(path);
-                // 查找key对应的缓存
+                // Find the cache corresponding to the key
                 snapShot = mDiskLruCache.get(key);
                 if (snapShot == null) {
-                    System.out.println("zh::::::::::::::snapShot == null;");
-                    // 如果没有找到对应的本地缓存，则准备从网络上请求数据/或生成视频截图，并写入本地缓存和内存缓存
+                    // If no corresponding local cache is found,
+                    // prepare to request data from the network
+                    // and/or generate video screenshots and write
+                    // to the local cache and memory cache
                     DiskLruCache.Editor editor = mDiskLruCache.edit(key);
                     if (editor != null) {
                         OutputStream outputStream = editor.newOutputStream(0);
@@ -135,20 +130,20 @@ public class LocalVideoImageLoader {
                             editor.abort();
                         }
                     }
-                    // 缓存被写入后，再次查找key对应的缓存
+                    // After the cache is written, search the cache corresponding to the key again
                     snapShot = mDiskLruCache.get(key);
                 }
                 if (snapShot != null) {
                     fileInputStream = (FileInputStream) snapShot.getInputStream(0);
                     fileDescriptor = fileInputStream.getFD();
                 }
-                // 将缓存数据解析成Bitmap对象
+                // Parse cached data into Bitmap objects
                 Bitmap bitmap = null;
                 if (fileDescriptor != null) {
                     bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                 }
                 if (bitmap != null) {
-                    // 将Bitmap对象添加到内存缓存当中
+                    // Add Bitmap object to memory cache
                     addVideoThumbToCache(key, bitmap);
                 }
                 return bitmap;
@@ -166,7 +161,10 @@ public class LocalVideoImageLoader {
         }
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            if(imgView.getTag().equals(hashKeyForDisk(path))){//通过 Tag可以绑定 图片地址和 imageView，这是解决Listview加载图片错位的解决办法之一
+            if(imgView.getTag().equals(hashKeyForDisk(path))){
+                //You can bind the image address and imageView through Tag,
+                // which is one of the solutions to solve the misplacement of
+                // loading images in Listview
                 if(bitmap != null){
                     imgView.setImageBitmap(bitmap);
                 }else{
@@ -177,7 +175,8 @@ public class LocalVideoImageLoader {
     }
 
     /**
-     * 根据传入的uniqueName获取硬盘缓存的路径地址。
+     * Obtain the path address of the disk
+     * cache based on the uniqueName passed in.
      */
     public File getDiskCacheDir(Context context, String uniqueName) {
         String cachePath;
@@ -191,7 +190,7 @@ public class LocalVideoImageLoader {
     }
 
     /**
-     * 获取当前应用程序的版本号。
+     * Get the version number of the current application.
      */
     public int getAppVersion(Context context) {
         try {
@@ -205,7 +204,7 @@ public class LocalVideoImageLoader {
     }
 
     /**
-     * 使用MD5算法对传入的key进行加密并返回。
+     * Use the MD5 algorithm to encrypt the incoming key and return it.
      */
     public String hashKeyForDisk(String key) {
         String cacheKey;
@@ -232,10 +231,10 @@ public class LocalVideoImageLoader {
     }
 
     /**
-     * 建立HTTP请求，并获取Bitmap对象。
+     * Create an HTTP request and get the Bitmap object.
      *
-     *            图片的URL地址
-     * @return 解析后的Bitmap对象
+     *            URL of the picture
+     * @return Parsed Bitmap object
      */
     private boolean downloadUrlToStream(String urlString, OutputStream outputStream) {
         Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(urlString,  MediaStore.Video.Thumbnails.MINI_KIND);

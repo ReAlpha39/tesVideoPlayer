@@ -1,17 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">VideoPlayer</string>
-    <string name="loading">Loading...</string>
-    <string name="title">Video Player Nyaa</string>
-    <string name="no_video_available">No video available</string>
-    <string name="failed_to_load_touch_the_screen_to_reload">Failed to load, touch the screen to reload</string>
-    <string name="no_network_available_touch_the_screen_to_reload">No network available, touch the screen to reload</string>
-    <string name="loading">Loading...</string>
-    <string name="left_text">Left text</string>
-    <string name="interface_title">Interface title</string>
-    <string name="right_text">Right text</string>
-    <string name="name">name</string>
-    <string name="video_name">Video name</string>
-    <string name="video_introduction">Video Introduction</string>
-    <string name="introduction">Introduction</string>
-    <string name="list_of_local_videos">List of local videos</string>
+    <string name="title" translatable="false">Video Player Nyaa</string>
+    <string name="no_video_available" translatable="false">No video available</string>
+    <string name="failed_to_load_touch_the_screen_to_reload" translatable="false">Failed to load, touch the screen to reload</string>
+    <string name="no_network_available_touch_the_screen_to_reload" translatable="false">No network available, touch the screen to reload</string>
+    <string name="loading" translatable="false">Loading...</string>
+    <string name="left_text" translatable="false">Left text</string>
+    <string name="interface_title" translatable="false">Interface title</string>
+    <string name="right_text" translatable="false">Right text</string>
+    <string name="name" translatable="false">name</string>
+    <string name="video_name" translatable="false">Video name</string>
+    <string name="video_introduction" translatable="false">Video Introduction</string>
+    <string name="introduction" translatable="false">Introduction</string>
+    <string name="list_of_local_videos" translatable="false">List of local videos</string>
 </resources>

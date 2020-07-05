@@ -6,32 +6,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
 
-import java.io.IOException;
-
 import id.nyaa.tesvideoplayerii.R;
 import id.nyaa.tesvideoplayerii.bean.LocalVideoBean;
 import id.nyaa.tesvideoplayerii.bean.Resources;
 
 public class PlayerActivity extends AppCompatActivity implements UniversalVideoView.VideoViewCallback {
-    VideoView videoView;
-    int position = -1;
 
     private id.nyaa.tesvideoplayerii.bean.Resources mVideoRes;
     public boolean isPlayLocalVideo = false;
 
     private static final String TAG = "MainActivity";
     private static final String SEEK_POSITION_KEY = "SEEK_POSITION_KEY";
-    private static final String VIDEO_URL = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
     View mBottomLayout;
     View mVideoLayout;

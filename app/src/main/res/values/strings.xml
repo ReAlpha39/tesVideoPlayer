@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">VideoPlayer</string>
-    <string name="title" translatable="false">Video Player Nyaa</string>
+    <string name="title" translatable="false">Video Player</string>
     <string name="no_video_available" translatable="false">No video available</string>
     <string name="failed_to_load_touch_the_screen_to_reload" translatable="false">Failed to load, touch the screen to reload</string>
     <string name="no_network_available_touch_the_screen_to_reload" translatable="false">No network available, touch the screen to reload</string>

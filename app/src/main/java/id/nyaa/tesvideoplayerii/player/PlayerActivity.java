@@ -91,10 +91,7 @@ public class PlayerActivity extends AppCompatActivity implements UniversalVideoV
         mVideoLayout.post(new Runnable() {
             @Override
             public void run() {
-                int width = mVideoLayout.getWidth();
-                cachedHeight = (int) (width * 405f / 720f);
-//                cachedHeight = (int) (width * 3f / 4f);
-//                cachedHeight = (int) (width * 9f / 16f);
+                cachedHeight = mVideoLayout.getHeight();
                 ViewGroup.LayoutParams videoLayoutParams = mVideoLayout.getLayoutParams();
                 videoLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 videoLayoutParams.height = cachedHeight;
@@ -134,7 +131,7 @@ public class PlayerActivity extends AppCompatActivity implements UniversalVideoV
         } else {
             ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layoutParams.height = this.cachedHeight;
+            layoutParams.height = cachedHeight;
             mVideoLayout.setLayoutParams(layoutParams);
             mBottomLayout.setVisibility(View.VISIBLE);
         }
